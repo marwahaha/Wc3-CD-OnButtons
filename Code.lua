@@ -1,21 +1,20 @@
 CommandButtonOverLayText = {}
 UnitCastAbleSpells = {}
 CurrentSelectedUnit = {}
---setmetatable(UnitCastAbleSpells, {__mode = "k"})--autoforget units when no strong reference is left
+setmetatable(UnitCastAbleSpells, {__mode = "k"})--autoforget units when no strong reference is left
 
 function UpdateTextOverLay()
     local playerIndex = GetLocalPlayer()
     if UnitCastAbleSpells[CurrentSelectedUnit[playerIndex]] then
         for k,v in pairs(UnitCastAbleSpells[CurrentSelectedUnit[playerIndex]]) do
-            --print (k)
+
             local spellId = v.SpellId
             if spellId then
             
             
             --v is the table, k the key
                 local fh = v.TextFrame
-                --local fh = CommandButtonOverLayText[BlzGetOriginFrame(ORIGIN_FRAME_COMMAND_BUTTON, v.TextFrameIndex)]
-                --print(BlzFrameIsVisible(BlzGetOriginFrame(ORIGIN_FRAME_COMMAND_BUTTON, v.TextFrameIndex)))
+
                 if fh and BlzFrameIsVisible(BlzGetOriginFrame(ORIGIN_FRAME_COMMAND_BUTTON, v.TextFrameIndex)) then
                  
                     local cd = BlzGetUnitAbilityCooldownRemaining(CurrentSelectedUnit[playerIndex], spellId)
@@ -68,7 +67,7 @@ function UpdateTextOverLay()
 end
 
 function UpdateSelection()
-    print("UpdateSelection")
+
     CurrentSelectedUnit[GetTriggerPlayer()] = GetTriggerUnit()
     --hide all overlays
 
@@ -82,7 +81,7 @@ end
 function UpdateUnitSpellPos(caster)
     --incomplete misses case in which units have skill point selection or attack ground buttons
 
-    print("UpdateUnitSpellPos")
+
     local spellCount = -1
     local spell
     local table = {}
@@ -111,7 +110,7 @@ function UpdateUnitSpellPos(caster)
         spellCount = spellCount + 1
         spell = BlzGetUnitAbilityByIndex(caster, spellCount)
     until spell == nil
-    print(spellCount)
+
     repeat
         spellCount = spellCount - 1
         spell = BlzGetUnitAbilityByIndex(caster, spellCount)
@@ -142,7 +141,7 @@ function UpdateUnitSpellPos(caster)
             end
         end
     until spellCount == 0
-    print("DOne")
+
 end
 function RememberCasting()
     print("RememberCasting")
@@ -157,7 +156,7 @@ function RememberCasting()
     print(GetUnitName(caster))
     print(GetObjectName(spellId))
     print(spell)
-    print(UnitCastAbleSpells[caster][spell].TextFrame)
+
 end
 
 function CreateTextOverLay()
